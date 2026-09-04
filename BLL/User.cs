@@ -27,14 +27,13 @@ namespace appointment_booking_system_api.BLL
                     var res = await db.QueryAsync<Users>("dbo.GetUsers", commandType: CommandType.StoredProcedure);
                     users = res.ToList();
                 }
-                return users;
             }
             
             catch (Exception ex)
             {
                 Log.Error("Exception {ex.Message}", ex.Message);
-                throw;
             }
+            return users;
         }
     }
 }
