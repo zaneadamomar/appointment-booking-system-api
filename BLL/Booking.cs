@@ -4,6 +4,7 @@ using Dapper;
 using Serilog;
 using System.Data;
 using System.Data.SqlClient;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace appointment_booking_system_api.BLL
 {
@@ -88,6 +89,29 @@ namespace appointment_booking_system_api.BLL
             catch (Exception ex)
             {
                 Log.Error("GetService {ex.Message}", ex.Message);
+            }
+            return result;
+        }
+
+        public async Task<List<TimeSlot>> GetAvailableTimeSlots(Guid BranchId, Guid ServiceId, string BookingDate)
+        {
+            var result = new List<TimeSlot>();
+            try
+            {
+                using (IDbConnection db = new SqlConnection(_connectionString))
+                {
+                    var response = await db.QueryAsync<TimeSlot>("dbo.GetAvailableTimeSlots",new 
+                    {
+                        @BranchId = BranchId,
+                        @ServiceId = ServiceId,
+                        @BookingDate = DateTime.Parse(BookingDate)
+                    }, commandType: CommandType.StoredProcedure);
+                    result = response.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("GetAvailableTimeSlots {ex.Message}", ex.Message);
             }
             return result;
         }

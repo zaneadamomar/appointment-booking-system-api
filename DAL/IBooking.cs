@@ -1,4 +1,5 @@
 ﻿using appointment_booking_system_api.Model;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace appointment_booking_system_api.DAL
 {
@@ -7,5 +8,6 @@ namespace appointment_booking_system_api.DAL
         Task<BookingConfirmation> CreateBooking(Bookings booking);
         Task<List<Branch>> GetBranch();
         Task<List<Service>> GetService();
+        Task<List<TimeSlot>> GetAvailableTimeSlots(Guid BranchId, Guid ServiceId, string BookingDate);
     }
 }

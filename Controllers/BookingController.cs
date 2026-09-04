@@ -3,6 +3,7 @@ using appointment_booking_system_api.DAL;
 using appointment_booking_system_api.Model;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace appointment_booking_system_api.Controllers
 {
@@ -39,6 +40,20 @@ namespace appointment_booking_system_api.Controllers
             catch (Exception ex)
             {
                 Log.Error("GetService Exception: {Message}", ex.Message);
+                throw;
+            }
+        }
+
+        [HttpGet("GetAvailableTimeSlots")]
+        public async Task<IActionResult> GetAvailableTimeSlots([FromQuery] Guid BranchId, Guid ServiceId, string BookingDate)
+        {
+            try
+            {
+                return Ok(await _bookings.GetAvailableTimeSlots(BranchId, ServiceId, BookingDate));
+            }
+            catch (Exception ex)
+            {
+                Log.Error("GetAvailableTimeSlots Exception: {Message}", ex.Message);
                 throw;
             }
         }
