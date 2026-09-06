@@ -50,7 +50,7 @@ namespace appointment_booking_system_api.BLL
                 {
                     ResultCode = 100,
                     ResultMessage = ex.Message,
-                    BookingId = string.Empty
+                    BookingId = Guid.Empty
                 };
             }
             return result;
