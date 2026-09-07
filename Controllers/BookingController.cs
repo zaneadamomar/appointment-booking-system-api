@@ -85,5 +85,19 @@ namespace appointment_booking_system_api.Controllers
                 throw;
             }
         }
+
+        [HttpPost("CancelBooking")]
+        public async Task<IActionResult> CancelBooking([FromBody] Bookings bookings)
+        {
+            try
+            {
+                return Ok(await _bookings.CancelBooking(bookings));
+            }
+            catch (Exception ex)
+            {
+                Log.Error("CancelBooking Exception: {Message}", ex.Message);
+                throw;
+            }
+        }
     }
 }

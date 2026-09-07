@@ -137,5 +137,40 @@ namespace appointment_booking_system_api.BLL
             }
             return result;
         }
+
+        public async Task<BookingConfirmation> CancelBooking(Bookings booking)
+        {
+            var result = new BookingConfirmation();
+            try
+            {
+                using (IDbConnection db = new SqlConnection(_connectionString))
+                {
+                    var response = await db.QueryAsync<BookingConfirmation>("dbo.CancelBooking", new
+                    {
+                        @BookingId = booking.BookingId,
+                        @UserId = booking.UserId    
+
+                    }, commandType: CommandType.StoredProcedure);
+
+                    result = new BookingConfirmation
+                    {
+                        ResultCode = response.FirstOrDefault().ResultCode,
+                        ResultMessage = response.FirstOrDefault().ResultMessage,
+                        BookingId = response.FirstOrDefault().BookingId
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("CancelBooking {ex.Message}", ex.Message);
+                result = new BookingConfirmation
+                {
+                    ResultCode = 100,
+                    ResultMessage = ex.Message,
+                    BookingId = Guid.Empty
+                };
+            }
+            return result;
+        }
     }
 }
