@@ -58,6 +58,20 @@ namespace appointment_booking_system_api.Controllers
             }
         }
 
+        [HttpPost("GetUserBooking")]
+        public async Task<IActionResult> GetUserBooking([FromQuery] Guid UserId)
+        {
+            try
+            {
+                return Ok(await _bookings.GetUserBooking(UserId));
+            }
+            catch (Exception ex)
+            {
+                Log.Error("GetUserBooking Exception: {Message}", ex.Message);
+                throw;
+            }
+        }
+
         [HttpPost("CreateBooking")]
         public async Task<IActionResult> CreateBooking([FromBody]Bookings bookings)
         {
@@ -67,7 +81,7 @@ namespace appointment_booking_system_api.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error("GetUsers Exception: {Message}", ex.Message);
+                Log.Error("CreateBooking Exception: {Message}", ex.Message);
                 throw;
             }
         }

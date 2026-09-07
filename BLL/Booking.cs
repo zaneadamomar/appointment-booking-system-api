@@ -55,6 +55,28 @@ namespace appointment_booking_system_api.BLL
             }
             return result;
         }
+        public async Task<List<Bookings>> GetUserBooking(Guid UserId)
+        {
+            var result = new List<Bookings>();
+            try
+            {
+                using (IDbConnection db = new SqlConnection(_connectionString))
+                {
+                    var response = await db.QueryAsync<Bookings>("dbo.GetBookingsByUser", new
+                    {
+                        @UserId = UserId
+
+                    }, commandType: CommandType.StoredProcedure);
+
+                    result = response.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("CreateBooking {ex.Message}", ex.Message);
+            }
+            return result;
+        }
 
         public async Task<List<Branch>> GetBranch()
         {

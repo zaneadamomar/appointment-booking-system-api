@@ -11,8 +11,8 @@
         public string? ServiceName { get; set; } = string.Empty;
         public int? DurationMinutes { get; set; }
         public DateTime? BookingDate { get; set; }
-        public DateTime? StartTime { get; set; }
-        public DateTime? EndTime { get; set; }
+        public TimeSpan? StartTime { get; set; }
+        public TimeSpan? EndTime { get; set; }
         public int? StatusId { get; set; }
         public string? Status { get; set; } = string.Empty;
         public DateTime? CreatedDate { get; set; }
