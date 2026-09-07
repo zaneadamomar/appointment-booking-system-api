@@ -6,6 +6,7 @@ namespace appointment_booking_system_api.DAL
     public interface IBooking
     {
         Task<BookingConfirmation> CreateBooking(Bookings booking);
+        Task<BookingConfirmation> RescheduleBooking(Bookings booking);
         Task<BookingConfirmation> CancelBooking(Bookings booking);
         Task<List<Bookings>> GetUserBooking(Guid UserId);
         Task<List<Branch>> GetBranch();
